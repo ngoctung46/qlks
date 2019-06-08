@@ -1,0 +1,8 @@
+<div *ngFor="let row of rooms; let i = index">
+  <div *ngIf="i % 4 === 0" class="row">
+    <div *ngFor="let room of rooms.slice(i, i + 4)" class="col">
+      <app-room [room]="room"></app-room>
+      <br />
+    </div>
+  </div>
+</div>

@@ -1,18 +1,34 @@
+import { CheckInModule } from './check-in/check-in.module';
+import { AngularMaterialModule } from './angular-material.module';
+import { FirebaseService } from './services/firebase.service';
+import { HomeModule } from './home/home.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { environment } from '../environments/environment';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
+    AngularMaterialModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    HomeModule,
+    CheckInModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    FirebaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

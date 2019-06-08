@@ -1,0 +1,113 @@
+<form autocomplete="off" [formGroup]="checkInForm" (ngSubmit)="submit();">
+  <div class="form-row">
+    <label>Thông tin cá nhân</label>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <input type="text" class="form-control" id="id" [typeahead]="customers" typeaheadOptionField="id"
+        placeholder="CMND/Hộ Chiếu số" formControlName="id" (typeaheadNoResults)="typeaheadNoResults($event)"
+        [ngClass]="{'is-invalid':(cf.id.dirty || cf.id.touched) && cf.id.invalid}"
+        (typeaheadOnSelect)="typeaheadOnSelect($event)" required>
+      <div *ngIf="!!cf.id.errors" class="invalid-feedback">
+        <div *ngIf="!!cf.id.errors.required">Yêu cầu nhập số CMND/Hộ Chiếu</div>
+      </div>
+    </div>
+  </div>
+  <fieldset [disabled]="!noResult">
+    <div class="form-row">
+      <div class="form-group col">
+        <input type="text" class="form-control" id="name" placeholder="Họ và tên" formControlName="name"
+          [ngClass]="{'is-invalid':(cf.name.dirty || cf.name.touched) && cf.name.invalid}" required>
+        <div *ngIf="(!!cf.name.dirty || !!cf.name.touched) && !!cf.name.invalid" class="invalid-feedback">
+          <div *ngIf="!!cf.name.errors.required">Yêu cầu nhập tên</div>
+          <div *ngIf="!!cf.name.errors.maxlength">Tên không vượt quá 250 ký tự</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="birthDate" placeholder="Ngày sinh" formControlName="birthDate"
+          [ngClass]="{'is-invalid':(cf.birthDate.dirty || cf.birthDate.touched) && cf.birthDate.invalid}" bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" required>
+        <div *ngIf="!!cf.birthDate.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.birthDate.errors.required">Yêu cầu nhập ngày sinh</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="birthPlace" placeholder="Nơi sinh" formControlName="birthPlace"
+          [ngClass]="{'is-invalid':(cf.birthPlace.dirty || cf.birthPlace.touched) && cf.birthPlace.invalid}" required>
+        <div *ngIf="!!cf.birthPlace.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.birthPlace.errors.required">Yêu cầu nhập nơi sinh</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="nationality" placeholder="Quốc tịch" formControlName="nationality"
+          [ngClass]="{'is-invalid':(cf.nationality.dirty || cf.nationality.touched) && cf.nationality.invalid}"
+          required>
+        <div *ngIf="!!cf.nationality.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.nationality.errors.required">Yêu cầu nhập quốc tịch</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Giấy tờ tùy thân</label>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <input type="text" class="form-control" id="issuedDate" bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" placeholder="Ngày cấp" formControlName="issuedDate"
+          [ngClass]="{'is-invalid':(cf.issuedDate.dirty || cf.issuedDate.touched) && cf.issuedDate.invalid}" required>
+        <div *ngIf="!!cf.issuedDate.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.issuedDate.errors.required">Yêu cầu nhập ngày cấp</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="expiredDate" bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" placeholder="Ngày hết hạn" formControlName="expiredDate"
+          [ngClass]="{'is-invalid':(cf.expiredDate.dirty || cf.expiredDate.touched) && cf.expiredDate.invalid}"
+          required>
+        <div *ngIf="!!cf.expiredDate.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.expiredDate.errors.required">Yêu cầu nhập ngày hết hạn</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="issuedPlace" placeholder="Nơi cấp" formControlName="issuedPlace"
+          [ngClass]="{'is-invalid':(cf.issuedPlace.dirty || cf.issuedPlace.touched) && cf.issuedPlace.invalid}"
+          required>
+        <div *ngIf="!!cf.issuedPlace.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.issuedPlace.errors.required">Yêu cầu nhập nơi cấp</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Thông tin cư trú</label>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <input type="text" class="form-control" id="addressLine1" placeholder="Số nhà, Đường"
+          formControlName="addressLine1">
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="addressLine2" placeholder="Phường(Xã) Quận(Huyện)"
+          formControlName="addressLine2">
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="province" placeholder="Tỉnh (Thành Phố)" formControlName="province"
+          [ngClass]="{'is-invalid':(cf.province.dirty || cf.province.touched) && cf.province.invalid}" required>
+        <div *ngIf="!!cf.province.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.province.errors.required">Yêu cầu thành phố cư trú</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <input type="text" class="form-control" id="country" placeholder="Quốc gia" formControlName="country"
+          [ngClass]="{'is-invalid':(cf.country.dirty || cf.country.touched) && cf.country.invalid}" required>
+        <div *ngIf="!!cf.country.errors" class="invalid-feedback">
+          <div *ngIf="!!cf.country.errors.required">Yêu cầu nhập quốc gia cư trú</div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary" [disabled]="!checkInForm.valid">Nhận Phòng</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-danger" (click)="checkInForm.reset();">Xóa</button>
+  </div>
+</form>

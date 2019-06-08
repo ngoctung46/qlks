@@ -1,0 +1,11 @@
+<div class="card text-center text-white">
+  <div class="card-header bg-primary">
+    {{ room.type | room}}
+  </div>
+  <div class="card-body" [ngClass]="{'text-danger':room.occupied, 'text-success':!room.occupied}">
+    <h1 class="card-title">{{room.number}}</h1>
+  </div>
+  <div class="card-footer" [routerLink]="['/check-in', room.id]">
+    <button class="btn btn-outline-primary">Nhận Khách</button>
+  </div>
+</div>
