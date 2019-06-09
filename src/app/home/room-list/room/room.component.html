@@ -3,11 +3,19 @@
     {{ room.type | room}}
   </div>
   <div class="card-body" [ngClass]="{'text-danger':room.occupied, 'text-success':!room.occupied}">
-    <h1 class="card-title">{{room.number}}</h1>
-    <p *ngIf="room.checkInTime"></p>
+    <h1 class="card-title display-4">{{room.number}}</h1>
+    <p *ngIf="room.checkInTime" class="font-italic">{{room.checkInTime.seconds * 1000 | date: 'dd/MM/yyyy hh:mm:ss'}}</p>
   </div>
-  <div class="card-footer" [routerLink]="['/check-in', room.id]">
-    <button class="btn btn-outline-primary">Nhận Khách</button>
+  <div class="card-footer">
+    <div *ngIf="!room.occupied else elseBlock">
+      <button [routerLink]="['/check-in', room.id]" class="btn btn-outline-primary">Nhận Khách</button>
+    </div>
+    <ng-template #elseBlock>
+      <div class="row">
+        <div class="col"><span class="fas fa-plus text-danger"></span></div>
+        <div class="col"><span class="fas fa-user-tie text-success"></span></div>
+        <div class="col"><span class="fas fa-receipt text-warning"></span></div>
+      </div>
+    </ng-template>
   </div>
 </div>
-<p>{{room | json}}</p>

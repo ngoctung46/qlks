@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { FirebaseService } from "../services/firebase.service";
-import { Room } from "../models/room";
+import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from '../services/firebase.service';
+import { Room } from '../models/room';
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   rooms: Room[] = [];

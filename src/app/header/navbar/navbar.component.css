@@ -1,0 +1,17 @@
+/*
+ * Custom translucent site header
+ */
+
+ .site-header {
+    background-color: rgba(13, 66, 241, 0.85);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .site-header a {
+    color: black;
+    transition: ease-in-out color .15s;
+  }
+  .site-header a:hover {
+    color: #fff;
+    text-decoration: none;
+  }

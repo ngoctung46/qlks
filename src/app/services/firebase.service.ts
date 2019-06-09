@@ -46,6 +46,10 @@ export class FirebaseService {
     );
   }
 
+  getCustomer(id: string): AngularFirestoreDocument<Customer> {
+    return this.afs.doc<Customer>(`customers/${id}`);
+  }
+
   addCustomer(customer: Customer) {
     this.afs.collection<Customer>('customers')
       .doc(customer.id).set(customer);

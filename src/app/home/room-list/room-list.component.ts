@@ -7,6 +7,6 @@ import { Room } from 'src/app/models/room';
   templateUrl: './room-list.component.html',
   styleUrls: ['./room-list.component.css']
 })
-export class RoomListComponent{
+export class RoomListComponent {
   @Input() rooms = [];
 }

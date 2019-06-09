@@ -11,7 +11,6 @@ import { StatisticComponent } from './statistic/statistic.component';
 
 
 
-
 @NgModule({
   declarations: [
     HomeComponent,

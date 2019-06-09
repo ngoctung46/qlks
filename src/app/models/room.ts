@@ -8,7 +8,7 @@ export class Room extends ModelBase {
   rate: number;
   status: RoomStatus;
   type: RoomType;
-  checkInTime: Date;
+  checkInTime: any;
   customerId: string;
   constructor(obj?: any) {
     super();
