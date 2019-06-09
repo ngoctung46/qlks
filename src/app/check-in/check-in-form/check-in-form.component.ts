@@ -1,7 +1,10 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { Room } from './../../models/room';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Customer } from 'src/app/models/customer';
+import { AngularFirestoreDocument } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-check-in-form',
@@ -14,13 +17,15 @@ export class CheckInFormComponent implements OnInit {
   customer: Customer;
   customers = [];
   noResult = false;
-  constructor(private fb: FormBuilder, private firebaseService: FirebaseService) {
+  room: AngularFirestoreDocument<Room>;
+  constructor(private fb: FormBuilder, private firebaseService: FirebaseService, private router: Router) {
   }
 
   ngOnInit() {
     this.customer = new Customer();
     this.firebaseService.getCustomers()
       .subscribe(customers => this.customers = customers);
+    this.room = this.firebaseService.getRoom(this.roomId);
     this.initForm(this.customer);
   }
 
@@ -32,7 +37,16 @@ export class CheckInFormComponent implements OnInit {
     if (this.noResult) {
       this.firebaseService.addCustomer(this.customer);
     }
-    console.log(`Submitted: ${JSON.stringify(this.customer)}`);
+    this.updateRoom();
+    this.router.navigate(['/']);
+  }
+
+  updateRoom() {
+    this.room.update({
+      checkInTime: new Date(),
+      customerId: this.customer.id,
+      occupied: true
+    });
   }
 
   get cf() {

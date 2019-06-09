@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreCollection
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,6 +27,10 @@ export class FirebaseService {
         })
       )
     );
+  }
+
+  getRoom(id: string): AngularFirestoreDocument<Room> {
+    return this.afs.doc<Room>(`rooms/${id}`);
   }
 
   getCustomers(): Observable<Customer[]> {

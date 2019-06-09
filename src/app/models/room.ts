@@ -8,7 +8,8 @@ export class Room extends ModelBase {
   rate: number;
   status: RoomStatus;
   type: RoomType;
-
+  checkInTime: Date;
+  customerId: string;
   constructor(obj?: any) {
     super();
     this.id = obj && obj.id || null;
@@ -17,5 +18,7 @@ export class Room extends ModelBase {
     this.rate = obj && obj.rate || (this.type === RoomType.Single ? 350_000 : 450_000);
     this.type = obj && obj.type || RoomType.Single;
     this.status = obj && obj.status || RoomStatus.Clean;
+    this.checkInTime = obj && obj.checkInTime || null;
+    this.customerId = obj && obj.customerId || null;
   }
 }
