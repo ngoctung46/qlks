@@ -9,7 +9,7 @@ export class Room extends ModelBase {
   status: RoomStatus;
   type: RoomType;
   checkInTime: any;
-  customerId: string;
+  orderId: string;
   constructor(obj?: any) {
     super();
     this.id = obj && obj.id || null;
@@ -19,6 +19,6 @@ export class Room extends ModelBase {
     this.type = obj && obj.type || RoomType.Single;
     this.status = obj && obj.status || RoomStatus.Clean;
     this.checkInTime = obj && obj.checkInTime || null;
-    this.customerId = obj && obj.customerId || null;
+    this.orderId = obj && obj.orderId || null;
   }
 }

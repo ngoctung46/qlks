@@ -1,3 +1,5 @@
+import { OrderModule } from './order/order.module';
+import { HotelServiceModule } from './hotel-service/hotel-service.module';
 import { CheckInModule } from './check-in/check-in.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { FirebaseService } from './services/firebase.service';
@@ -25,6 +27,8 @@ import { HeaderModule } from './header/header.module';
     AngularFirestoreModule,
     HeaderModule,
     HomeModule,
+    OrderModule,
+    HotelServiceModule,
     CheckInModule,
     AppRoutingModule
   ],

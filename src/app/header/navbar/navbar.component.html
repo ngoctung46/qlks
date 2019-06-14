@@ -1,7 +1,16 @@
-<nav class="site-header sticky-top py-1">
-  <div class="container d-flex flex-column flex-md-row justify-content-between">
-    <a *ngFor="let item of menuItems" class="py-2 d-none d-md-inline-block" [routerLink]="[item.url]">
-      {{ item.name }}
-    </a>
-  </div>
-</nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/']">Hoàng Long</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" *ngFor="let item of menuItems" >
+          <a class="nav-link" [routerLink]="[item.url]" routerlinkActive="active">
+            {{item.name}} <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>

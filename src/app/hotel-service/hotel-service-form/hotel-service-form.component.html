@@ -1,0 +1,28 @@
+<div class="text-center">
+  <form [formGroup]="serviceForm" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-3">
+        <input type="text" class="form-control" placeholder="Tên Dịch Vụ" formControlName="name" required>
+      </div>
+      <div class="col-4">
+        <input type="text" class="form-control" placeholder="Diễn giải" formControlName="description">
+      </div>
+      <div class="col-2">
+        <input type="number" class="form-control" placeholder="Đơn giá" formControlName="unitPrice">
+      </div>
+      <div class="col-2">
+        <div class="form-check">
+          <input class="form-control" type="checkbox" formControlName="isStockable" id="stockableCheck">
+          <label class="form-check-label" for="stockableCheck">
+            Quản Lý Số Lượng
+          </label>
+        </div>
+      </div>
+      <div class="col-1">
+        <button type="submit" class="btn btn-primary" [disabled]="serviceForm.invalid">
+          <span class="fas fa-plus"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

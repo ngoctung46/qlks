@@ -8,11 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   menuItems = [
-    { name: 'Room Manager', url: '/home' },
-    { name: 'Service Manager', url: '/service' },
-    { name: 'Expense Manager', url: '/expense' },
-    { name: 'Booking Manager', url: '/bookings' },
-    { name: 'Report', url: '/reports' }
+    { name: 'Dịch Vụ', url: '/hotel-services' },
+    { name: 'Thu Chi', url: '/expenses' },
+    { name: 'Đặt Phòng', url: '/bookings' },
+    { name: 'Báo Cáo', url: '/reports' }
   ];
   constructor() { }
 

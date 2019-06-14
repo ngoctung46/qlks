@@ -8,3 +8,8 @@ export enum RoomStatus {
   Dirty = 1,
   CustomerOut = 2
 }
+
+export enum OrderStatus {
+  UnPaid = 0,
+  Paid = 1
+}

@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   title = 'KS HOANG LONG';
   constructor(private readonly firebaseService: FirebaseService) {}
   ngOnInit() {
-    this.firebaseService.initApp();
+    // this.firebaseService.initApp();
   }
 }

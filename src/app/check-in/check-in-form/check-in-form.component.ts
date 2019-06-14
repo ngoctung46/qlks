@@ -1,3 +1,4 @@
+import { OrderStatus } from './../../enums';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from './../../models/room';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -5,6 +6,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Customer } from 'src/app/models/customer';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Order } from 'src/app/models/order';
 
 @Component({
   selector: 'app-check-in-form',
@@ -14,6 +16,7 @@ import { AngularFirestoreDocument } from '@angular/fire/firestore';
 export class CheckInFormComponent implements OnInit {
   checkInForm: FormGroup;
   @Input() roomId = '';
+  @Input() customerId = '';
   customer: Customer;
   customers = [];
   noResult = false;
@@ -37,16 +40,22 @@ export class CheckInFormComponent implements OnInit {
     if (this.noResult) {
       this.firebaseService.addCustomer(this.customer);
     }
-    this.updateRoom();
+    const orderId = this.createOrder();
+    this.updateRoom(orderId);
     this.router.navigate(['/']);
   }
 
-  updateRoom() {
+  updateRoom(orderId: string) {
     this.room.update({
       checkInTime: new Date(),
-      customerId: this.customer.id,
+      orderId,
       occupied: true
     });
+  }
+
+  createOrder() {
+    const order = new Order({customerId: this.customer.id, roomId: this.roomId });
+    return this.firebaseService.addOrder(order);
   }
 
   get cf() {
@@ -62,7 +71,6 @@ export class CheckInFormComponent implements OnInit {
     customer.birthDate = new Date(event.item.birthDate.seconds);
     customer.issuedDate = new Date(event.item.issuedDate.seconds);
     customer.expiredDate = new Date(event.item.expiredDate.seconds);
-    console.log(JSON.stringify(customer));
     this.setFormValues(customer);
   }
 

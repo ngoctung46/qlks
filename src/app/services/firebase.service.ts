@@ -1,3 +1,4 @@
+import { HotelService } from './../models/hotel-service';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
@@ -8,6 +9,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Room } from '../models/room';
 import { Customer } from '../models/customer';
+import { OrderLine } from '../models/order-line';
+import { Order } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +54,94 @@ export class FirebaseService {
   }
 
   addCustomer(customer: Customer) {
-    this.afs.collection<Customer>('customers')
-      .doc(customer.id).set(customer);
+    this.afs
+      .collection<Customer>('customers')
+      .doc(customer.id)
+      .set(customer);
+  }
+
+  addOrderLine(orderLine: OrderLine) {
+    const id = this.afs.createId();
+    this.afs
+      .collection<OrderLine>('orderlines')
+      .doc(id)
+      .set(orderLine.getData());
+    return id;
+  }
+
+  updateOrderLineQuantity(id: string, quantity: number) {
+    const ol = this.afs.doc<OrderLine>('orderlines');
+    ol.update({quantity});
+  }
+
+  addOrder(order: Order) {
+    const id = this.afs.createId();
+    this.afs
+      .collection<Order>('orders')
+      .doc(id)
+      .set(order.getData());
+    return id;
+  }
+
+  updateOrderTotal(id: string, total: number) {
+    const order = this.afs.doc<Order>(`orders/${id}`);
+    order.update({total});
+  }
+
+  updateServiceStock(id: string, amount: number) {
+    const  service = this.afs.doc<HotelService>(`hotel-services/${id}`);
+    service.update({inStock: amount});
+  }
+
+
+  getOrder(orderId: string): AngularFirestoreDocument<Order> {
+    return this.afs.doc<Order>(`orders/${orderId}`);
+  }
+
+  getOrderLinesByOrderId(orderId: string): Observable<OrderLine[]> {
+    const orderLines = this.afs.collection<OrderLine>('orderlines', ref =>
+      ref.where('orderId', '==', orderId));
+    return orderLines.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as OrderLine;
+          data.id = a.payload.doc.id;
+          return data;
+        })
+      )
+    );
+  }
+
+  addHotelService(hotelService: HotelService): string {
+    const id = this.afs.createId();
+    this.afs
+      .collection<HotelService>('hotel-services')
+      .doc(id)
+      .set(hotelService);
+    return id;
+  }
+
+  updateService(id: string, qty: number) {
+    const service = this.afs.doc<HotelService>(`hotel-services/${id}`);
+    service.update({ inStock: qty });
+  }
+
+  deleteService(id: string) {
+    const service = this.afs.doc<HotelService>(`hotel-services/${id}`);
+    service.delete();
+  }
+
+  getHotelServices(): Observable<HotelService[]> {
+    const services = this.afs.collection<HotelService>('hotel-services');
+    return services.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as HotelService;
+          data.id = a.payload.doc.id;
+          return data;
+        })
+      )
+    );
   }
 
   initApp() {

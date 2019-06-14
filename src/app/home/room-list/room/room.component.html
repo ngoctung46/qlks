@@ -4,7 +4,15 @@
   </div>
   <div class="card-body" [ngClass]="{'text-danger':room.occupied, 'text-success':!room.occupied}">
     <h1 class="card-title display-4">{{room.number}}</h1>
-    <p *ngIf="room.checkInTime" class="font-italic">{{room.checkInTime.seconds * 1000 | date: 'dd/MM/yyyy hh:mm:ss'}}</p>
+    <p *ngIf="room.checkInTime else block1" class="font-italic text-muted">
+      {{room.checkInTime.seconds * 1000 | date: 'dd/MM/yyyy hh:mm:ss'}}</p>
+    <ng-template #block1>
+      <p>Phòng Trống</p>
+    </ng-template>
+    <p *ngIf="customer else block2" class="text-info">{{customer?.name}}</p>
+    <ng-template #block2>
+      <p class="text-info">Chưa nhận khách</p>
+    </ng-template>
   </div>
   <div class="card-footer">
     <div *ngIf="!room.occupied else elseBlock">
@@ -12,7 +20,7 @@
     </div>
     <ng-template #elseBlock>
       <div class="row">
-        <div class="col"><span class="fas fa-plus text-danger"></span></div>
+        <div class="col"><span class="fas fa-cart-arrow-down text-danger" [routerLink]="['/order',this.room.orderId]"></span></div>
         <div class="col"><span class="fas fa-user-tie text-success"></span></div>
         <div class="col"><span class="fas fa-receipt text-warning"></span></div>
       </div>

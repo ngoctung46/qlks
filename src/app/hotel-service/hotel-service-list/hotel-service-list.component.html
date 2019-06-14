@@ -1,0 +1,75 @@
+<!-- <div class="table-responsive">
+    <table *ngIf="hotelServices.length > 0" class="table-striped">
+        <tr>
+          <td scope="col">STT</td>
+          <td scope="col">Tên</td>
+          <td scope="col">Nội dung</td>
+          <td scope="col">Đơn giá</td>
+          <td scope="col">Số lượng</td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let hotelService of hotelServices; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ hotelService.name }}</td>
+            <td>{{ hotelService.description }}</td>
+            <td>{{ hotelService.unitPrice | number }}</td>
+            <td>{{ hotelService.inStock | number }}</td>
+            <td><span class="fas fa-plus text-success"></span>Nhập</td>
+        </tr>
+    </table>
+</div> -->
+<p></p>
+<table class="table table-striped text-center">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">STT</th>
+      <th scope="col" class="text-left">Tên</th>
+      <th scope="col" class="text-left">Nội dung</th>
+      <th scope="col" class="text-right">Đơn giá</th>
+      <th scope="col" class="text-right">Số lượng</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let service of hotelServices; let i = index">
+      <th scope="row">{{i + 1}}</th>
+      <td class="text-left">{{service.name}}</td>
+      <td class="text-left">{{service.description}}</td>
+      <td class="text-right font-weight-bold">{{service.unitPrice | number }}</td>
+      <td class="text-right text-danger font-weight-bold">{{service.isStockable ? (service.inStock | number) : '' }}</td>
+      <td class="text-left">
+        <ng-container *ngIf="service.isStockable">
+          <button class="btn btn-info" (click)="showModal(template, service)">
+            <span class="fas fa-plus"></span>
+          </button>
+          &nbsp;
+        </ng-container>
+        <button class="btn btn-danger" (click)="showModal(confirmTemplate, service)">
+          <span class="fas fa-trash-alt"></span>
+        </button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--Add Modal-->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Nhập kho {{selectedService.name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="number" class="form-control" [(ngModel)]="qty" (keydown.enter)="hideModal();" autofocus>
+  </div>
+</ng-template>
+
+<!--Confirm Modal-->
+<ng-template #confirmTemplate>
+  <div class="modal-body text-center">
+    <p>Nhập mật khẩu để xóa {{selectedService.name}}?</p>
+    <input type="password" class="form-control" [(ngModel)]="deleteCode" (keydown.enter)="hideConfirmModal();" autofocus>
+  </div>
+</ng-template>

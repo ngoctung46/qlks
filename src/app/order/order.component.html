@@ -1,0 +1,2 @@
+<app-order-form [orderId]="orderId" [services]="services" (itemChanged)="update($event)"></app-order-form>
+<app-order-list *ngIf="orderLines.length > 0" [orderLines]="orderLines"></app-order-list>
